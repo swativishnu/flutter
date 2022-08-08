@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in_demo/Custom_widgets/custom_raised_Button.dart';
 import 'package:sign_in_demo/app/Sign_in/sigh_in_button.dart';
+import 'package:sign_in_demo/app/Sign_in/social_sign_in_button.dart';
 
 //import 'package:flutter/src/foundation/key.dart';
 //import 'package:flutter/src/widgets/framework.dart';
@@ -36,27 +37,19 @@ Widget _buildContainer() {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
         ),
-        // const SizedBox(height: 8.0),
-        // CustomRaisedButton(
-        //   color: Colors.white,
-        //   onPressed: () {},
-        //   child: Row(
-        //     children: [
-        //       Image.asset('images/google-logo.png'),
-        //       Text('Sign In with Google'),
-        //     ],
-        //   ),
-        // ),
-        SignInButton(
+        const SizedBox(height: 48.0),
+        SocialSignInButton(
           // ignore: sort_child_properties_last
+          AssName: 'images/google-logo.png',
           text: 'Sign In with google',
           color: Colors.white,
           textColor: Colors.black87,
           onPressed: () {},
         ),
         const SizedBox(height: 8.0),
-        SignInButton(
+        SocialSignInButton(
           // ignore: sort_child_properties_last
+          AssName: 'images/facebook-logo.png',
           text: 'Sign In with Facebook',
           textColor: Colors.white,
           color: Color(0xFF334D92),
