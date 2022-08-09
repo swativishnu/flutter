@@ -15,7 +15,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _datofBirthController = TextEditingController();
+  final TextEditingController _dateofBirthController = TextEditingController();
   DateTime? _dateOfBirth;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             height: 8.0,
           ),
           TextFormField(
-            controller: _datofBirthController,
+            controller: _dateofBirthController,
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -64,9 +64,12 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             },
             onTap: () => pickDateOfBirth(context),
           ),
-          const SizedBox(
-            height: 8.0,
-          ),
+          // CustomDatePickerFormField(
+          //     controller: _dateofBirthController,
+          //     txtLabel: 'Date of Birth',
+          //     callback: () {
+          //       pickDateOfBirth(context);
+          //     }),
         ]),
       ),
     );
@@ -98,7 +101,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     setState(() {
       _dateOfBirth = newDate;
       String dob = DateFormat('dd/MM/yyyy').format(newDate);
-      _datofBirthController.text = dob;
+      _dateofBirthController.text = dob;
     });
   }
 }
