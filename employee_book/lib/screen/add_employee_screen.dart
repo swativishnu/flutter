@@ -1,4 +1,5 @@
-//import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' as drift;
+import 'package:employee_book/Data/local/DB/app_db.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,18 +13,42 @@ class AddEmployeeScreen extends StatefulWidget {
 }
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+  late AppDb _db;
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _dateofBirthController = TextEditingController();
   DateTime? _dateOfBirth;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
+
+  @override
+  void dispose() {
+    _db.close();
+    _userNameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _dateofBirthController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Employee'),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.save))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                addEmployee();
+              },
+              icon: const Icon(Icons.save))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -103,5 +128,30 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       String dob = DateFormat('dd/MM/yyyy').format(newDate);
       _dateofBirthController.text = dob;
     });
+  }
+
+  void addEmployee() {
+    final entity = EmployeeCompanion(
+      userName: drift.Value(_userNameController.text),
+      firstName: drift.Value(_firstNameController.text),
+      lastName: drift.Value(_lastNameController.text),
+      dateOfBirth: drift.Value(_dateOfBirth!),
+    );
+    _db.insertEmployee(entity).then((value) =>
+        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+            backgroundColor: Colors.pink,
+            content: Text(
+              'New employee Inserted $value',
+              style: const TextStyle(color: Colors.white),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () =>
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+                  child: const Text(
+                    'Close',
+                    style: TextStyle(color: Colors.white),
+                  ))
+            ])));
   }
 }
