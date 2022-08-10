@@ -51,45 +51,55 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: employees.length,
                   itemBuilder: (context, index) {
                     final employee = employees[index];
-                    return Card(
-                      color: Colors.grey.shade300,
-                      shape: const RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Colors.green,
-                          width: 1.2,
-                          style: BorderStyle.solid,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/edit_employee',
+                            arguments: employee.id);
+                      },
+                      child: Card(
+                        color: Colors.grey.shade300,
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.green,
+                            width: 1.2,
+                            style: BorderStyle.solid,
+                          ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0)),
                         ),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              employee.id.toString(),
-                              style: const TextStyle(color: Colors.blueAccent),
-                            ),
-                            Text(
-                              employee.userName.toString(),
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 208, 68, 17)),
-                            ),
-                            Text(
-                              employee.firstName.toString(),
-                              style: const TextStyle(color: Colors.blueAccent),
-                            ),
-                            Text(
-                              employee.lastName.toString(),
-                              style: const TextStyle(color: Colors.blueAccent),
-                            ),
-                            Text(
-                              employee.dateOfBirth.toString(),
-                              style: const TextStyle(color: Colors.blueAccent),
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                employee.id.toString(),
+                                style:
+                                    const TextStyle(color: Colors.blueAccent),
+                              ),
+                              Text(
+                                employee.userName.toString(),
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 208, 68, 17)),
+                              ),
+                              Text(
+                                employee.firstName.toString(),
+                                style:
+                                    const TextStyle(color: Colors.blueAccent),
+                              ),
+                              Text(
+                                employee.lastName.toString(),
+                                style:
+                                    const TextStyle(color: Colors.blueAccent),
+                              ),
+                              Text(
+                                employee.dateOfBirth.toString(),
+                                style:
+                                    const TextStyle(color: Colors.blueAccent),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
