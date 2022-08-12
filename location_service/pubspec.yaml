@@ -1,4 +1,4 @@
-name: employee_book
+name: location_service
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -27,16 +27,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter: 
+  flutter:
     sdk: flutter
-  drift: ^1.7.1
-  sqlite3_flutter_libs: ^0.5.0
-  path_provider: ^2.0.0
-  path: ^1.8.1
-  intl: ^0.17.0  
   get_it: ^7.2.0
-
-
+  location: ^4.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -45,8 +39,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  drift_dev: ^1.7.0
-  build_runner: ^2.1.11
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
