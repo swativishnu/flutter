@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:drift/drift.dart' as drift;
 import 'package:employee_book/Data/local/DB/app_db.dart';
 import 'package:employee_book/injection_container.dart';

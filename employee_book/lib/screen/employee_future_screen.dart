@@ -24,9 +24,9 @@ class _EmployeeFututreScreenState extends State<EmployeeFututreScreen> {
         title: const Text('Employee Future'),
         centerTitle: true,
       ),
-      body: StreamBuilder<List<EmployeeData>>(
+      body: FutureBuilder<List<EmployeeData>>(
         //future: _db.getEmployees(),
-        stream: Provider.of<AppDb>(context).getEmployeeStream(),
+        future: Provider.of<AppDb>(context).getEmployees(),
         builder: (context, snapshot) {
           final List<EmployeeData>? employees = snapshot.data;
 

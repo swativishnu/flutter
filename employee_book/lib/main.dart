@@ -1,16 +1,26 @@
 import 'package:employee_book/Data/local/DB/app_db.dart';
-import 'package:employee_book/injection_container.dart';
+import 'package:employee_book/notifier/employee_change_notifier.dart';
 import 'package:employee_book/route/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  init();
+  // init();
   runApp(
-    Provider(
-      create: (context) => AppDb(),
+    MultiProvider(
+//      create: (context) => AppDb(),
+      providers: [
+        Provider.value(
+          value: AppDb(),
+        ),
+        ChangeNotifierProxyProvider<AppDb, EmployeeChangeNotifier>(
+            create: (context) => EmployeeChangeNotifier(),
+            update: (context, db, notifier) => notifier!
+              ..initAppDb(db)
+              ..getEmployeeFuture())
+      ],
       child: const MyApp(),
-      dispose: (context, AppDb db) => db.close(),
+      // dispose: (context, AppDb db) => db.close(),
     ),
   );
 }
