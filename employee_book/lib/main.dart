@@ -1,7 +1,9 @@
+import 'package:employee_book/injection_container.dart';
 import 'package:employee_book/route/route_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  init();
   runApp(const MyApp());
 }
 

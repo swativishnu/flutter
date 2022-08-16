@@ -99,8 +99,6 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                     label: Text('Date of Birth'),
                   ),
                   validator: (value) {
-                    // ignore: avoid_print
-                    print(value);
                     if (value == null || value.isEmpty) {
                       return 'Data of Birth  can not be Empty';
                     }
@@ -154,12 +152,8 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
   }
 
   void editEmployee() {
-    //final isValid = _formKey.currentState?.validate();
-    // ignore: avoid_print
-    print("Start");
-    if (_formKey.currentState!.validate()) {
-      // ignore: avoid_print
-      print(_dateOfBirth);
+    final isValid = _formKey.currentState?.validate();
+    if (isValid != null && isValid) {
       final entity = EmployeeCompanion(
         id: drift.Value(widget.id),
         userName: drift.Value(_userNameController.text),
@@ -167,9 +161,6 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
         lastName: drift.Value(_lastNameController.text),
         dateOfBirth: drift.Value(_dateOfBirth!),
       );
-      // ignore: avoid_print
-      print("rrr");
-
       _dbObj.updateEmployee(entity).then((value) =>
           ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
               backgroundColor: Colors.pink,
@@ -210,12 +201,9 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
 
   Future<void> getEmployee() async {
     _employeeData = await _dbObj.getEmployee(widget.id);
-    _userNameController.text = _employeeData.userName.toString();
-    _firstNameController.text = _employeeData.firstName.toString();
-    _lastNameController.text = _employeeData.lastName.toString();
-    _dateofBirthController.text =
-        DateFormat('dd/MM/yyyy').format(_employeeData.dateOfBirth).toString();
-    // _dateofBirthController.text = _employeeData.dateOfBirth.toIso8601String();
-    _dateOfBirth = _employeeData.dateOfBirth;
+    _userNameController.text = _employeeData.userName;
+    _firstNameController.text = _employeeData.firstName;
+    _lastNameController.text = _employeeData.lastName;
+    _dateofBirthController.text = _employeeData.dateOfBirth.toIso8601String();
   }
 }

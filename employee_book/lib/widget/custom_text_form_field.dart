@@ -22,6 +22,8 @@ class CustomTextFormField extends StatelessWidget {
         label: Text(_txtLable),
       ),
       validator: (value) {
+        // ignore: avoid_print
+        print(value);
         if (value == null || value.isEmpty) {
           return '$_txtLable can not be Empty';
         }

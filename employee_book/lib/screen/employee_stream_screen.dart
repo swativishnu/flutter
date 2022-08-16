@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../Data/local/DB/app_db.dart';
+import '../injection_container.dart';
 
 class EmployeeStreamScreen extends StatefulWidget {
   const EmployeeStreamScreen({Key? key}) : super(key: key);
@@ -10,17 +12,15 @@ class EmployeeStreamScreen extends StatefulWidget {
 }
 
 class _EmployeeStreamScreenState extends State<EmployeeStreamScreen> {
-  late AppDb _db;
+  final _dbObj = sl<AppDb>();
 
   @override
   void initState() {
-    _db = AppDb();
     super.initState();
   }
 
   @override
   void dispose() {
-    _db.close();
     super.dispose();
   }
 
@@ -32,7 +32,7 @@ class _EmployeeStreamScreenState extends State<EmployeeStreamScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder<List<EmployeeData>>(
-        future: _db.getEmployees(),
+        future: _dbObj.getEmployees(),
         builder: (context, snapshot) {
           final List<EmployeeData>? employees = snapshot.data;
 
@@ -91,7 +91,9 @@ class _EmployeeStreamScreenState extends State<EmployeeStreamScreen> {
                               style: const TextStyle(color: Colors.blueAccent),
                             ),
                             Text(
-                              employee.dateOfBirth.toString(),
+                              DateFormat('dd/MM/yyyy')
+                                  .format(employee.dateOfBirth)
+                                  .toString(),
                               style: const TextStyle(color: Colors.blueAccent),
                             ),
                           ],

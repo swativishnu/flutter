@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../Data/local/DB/app_db.dart';
+import '../injection_container.dart';
 
 class EmployeeFututreScreen extends StatefulWidget {
   const EmployeeFututreScreen({Key? key}) : super(key: key);
@@ -10,18 +12,18 @@ class EmployeeFututreScreen extends StatefulWidget {
 }
 
 class _EmployeeFututreScreenState extends State<EmployeeFututreScreen> {
-
-  late AppDb _db;
+  //late AppDb _db;
+  final _dbObj = sl<AppDb>();
 
   @override
   void initState() {
-    _db = AppDb();
+    // _db = AppDb();
     super.initState();
   }
 
   @override
   void dispose() {
-    _db.close();
+    //   _db.close();
     super.dispose();
   }
 
@@ -33,7 +35,8 @@ class _EmployeeFututreScreenState extends State<EmployeeFututreScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder<List<EmployeeData>>(
-        future: _db.getEmployees(),
+        //future: _db.getEmployees(),
+        future: _dbObj.getEmployees(),
         builder: (context, snapshot) {
           final List<EmployeeData>? employees = snapshot.data;
 
@@ -92,7 +95,8 @@ class _EmployeeFututreScreenState extends State<EmployeeFututreScreen> {
                               style: const TextStyle(color: Colors.blueAccent),
                             ),
                             Text(
-                              employee.dateOfBirth.toString(),
+                              DateFormat('dd/MM/yyyy')
+                                  .format(employee.dateOfBirth),
                               style: const TextStyle(color: Colors.blueAccent),
                             ),
                           ],

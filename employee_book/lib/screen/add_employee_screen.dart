@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' as drift;
 import 'package:employee_book/Data/local/DB/app_db.dart';
+import 'package:employee_book/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,7 +15,9 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final _formKey = GlobalKey<FormState>();
-  late AppDb _db;
+  //late AppDb _db;
+  final _dbObj = sl<AppDb>();
+
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -24,12 +27,10 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   @override
   void initState() {
     super.initState();
-    _db = AppDb();
   }
 
   @override
   void dispose() {
-    _db.close();
     _userNameController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
@@ -148,7 +149,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         lastName: drift.Value(_lastNameController.text),
         dateOfBirth: drift.Value(_dateOfBirth!),
       );
-      _db.insertEmployee(entity).then((value) =>
+      _dbObj.insertEmployee(entity).then((value) =>
           ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
               backgroundColor: Colors.pink,
               content: Text(

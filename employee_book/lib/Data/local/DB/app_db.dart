@@ -12,6 +12,8 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(path.join(dbFolder.path, 'employee.sqlite'));
+    // ignore: avoid_print
+    print(file);
     return NativeDatabase(file);
   });
 }
