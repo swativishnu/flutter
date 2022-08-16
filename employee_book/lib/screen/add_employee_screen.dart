@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart' as drift;
 import 'package:employee_book/Data/local/DB/app_db.dart';
-import 'package:employee_book/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../widget/custom_text_form_field.dart';
 
@@ -15,8 +15,6 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final _formKey = GlobalKey<FormState>();
-  //late AppDb _db;
-  final _dbObj = sl<AppDb>();
 
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
@@ -149,22 +147,23 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         lastName: drift.Value(_lastNameController.text),
         dateOfBirth: drift.Value(_dateOfBirth!),
       );
-      _dbObj.insertEmployee(entity).then((value) =>
-          ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-              backgroundColor: Colors.pink,
-              content: Text(
-                'New employee Inserted $value',
-                style: const TextStyle(color: Colors.white),
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () => ScaffoldMessenger.of(context)
-                        .hideCurrentMaterialBanner(),
-                    child: const Text(
-                      'Close',
-                      style: TextStyle(color: Colors.white),
-                    ))
-              ])));
+      Provider.of<AppDb>(context, listen: false).insertEmployee(entity).then(
+          (value) =>
+              ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                  backgroundColor: Colors.pink,
+                  content: Text(
+                    'New employee Inserted $value',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  actions: [
+                    TextButton(
+                        onPressed: () => ScaffoldMessenger.of(context)
+                            .hideCurrentMaterialBanner(),
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ])));
     }
   }
 }

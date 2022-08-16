@@ -2,9 +2,10 @@
 
 import 'package:drift/drift.dart' as drift;
 import 'package:employee_book/Data/local/DB/app_db.dart';
-import 'package:employee_book/injection_container.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../widget/custom_text_form_field.dart';
 
@@ -20,7 +21,6 @@ class EditEmployeeScreen extends StatefulWidget {
 }
 
 class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
-  final _dbObj = sl<AppDb>();
   final _formKey = GlobalKey<FormState>();
   late EmployeeData _employeeData;
   final TextEditingController _userNameController = TextEditingController();
@@ -170,46 +170,49 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
       // ignore: avoid_print
       print("rrr");
 
-      _dbObj.updateEmployee(entity).then((value) =>
-          ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-              backgroundColor: Colors.pink,
-              content: Text(
-                'Employee Updated $value',
-                style: const TextStyle(color: Colors.white),
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () => ScaffoldMessenger.of(context)
-                        .hideCurrentMaterialBanner(),
-                    child: const Text(
-                      'Close',
-                      style: TextStyle(color: Colors.white),
-                    ))
-              ])));
+      Provider.of<AppDb>(context, listen: false).updateEmployee(entity).then(
+          (value) =>
+              ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                  backgroundColor: Colors.pink,
+                  content: Text(
+                    'Employee Updated $value',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  actions: [
+                    TextButton(
+                        onPressed: () => ScaffoldMessenger.of(context)
+                            .hideCurrentMaterialBanner(),
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ])));
     }
   }
 
   void deleteEmployee() {
-    _dbObj.deleteEmployee(widget.id).then((value) =>
-        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-            backgroundColor: Colors.pink,
-            content: Text(
-              'Employee Info Deleted $value',
-              style: const TextStyle(color: Colors.white),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () =>
-                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
-                  child: const Text(
-                    'Close',
-                    style: TextStyle(color: Colors.white),
-                  ))
-            ])));
+    Provider.of<AppDb>(context, listen: false).deleteEmployee(widget.id).then(
+        (value) =>
+            ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                backgroundColor: Colors.pink,
+                content: Text(
+                  'Employee Info Deleted $value',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () => ScaffoldMessenger.of(context)
+                          .hideCurrentMaterialBanner(),
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(color: Colors.white),
+                      ))
+                ])));
   }
 
   Future<void> getEmployee() async {
-    _employeeData = await _dbObj.getEmployee(widget.id);
+    _employeeData =
+        await Provider.of<AppDb>(context, listen: false).getEmployee(widget.id);
     _userNameController.text = _employeeData.userName.toString();
     _firstNameController.text = _employeeData.firstName.toString();
     _lastNameController.text = _employeeData.lastName.toString();

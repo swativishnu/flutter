@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../Data/local/DB/app_db.dart';
-import '../injection_container.dart';
 
 class EmployeeFututreScreen extends StatefulWidget {
   const EmployeeFututreScreen({Key? key}) : super(key: key);
@@ -12,19 +12,9 @@ class EmployeeFututreScreen extends StatefulWidget {
 }
 
 class _EmployeeFututreScreenState extends State<EmployeeFututreScreen> {
-  //late AppDb _db;
-  final _dbObj = sl<AppDb>();
-
   @override
   void initState() {
-    // _db = AppDb();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    //   _db.close();
-    super.dispose();
   }
 
   @override
@@ -34,9 +24,9 @@ class _EmployeeFututreScreenState extends State<EmployeeFututreScreen> {
         title: const Text('Employee Future'),
         centerTitle: true,
       ),
-      body: FutureBuilder<List<EmployeeData>>(
+      body: StreamBuilder<List<EmployeeData>>(
         //future: _db.getEmployees(),
-        future: _dbObj.getEmployees(),
+        stream: Provider.of<AppDb>(context).getEmployeeStream(),
         builder: (context, snapshot) {
           final List<EmployeeData>? employees = snapshot.data;
 

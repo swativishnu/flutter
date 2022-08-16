@@ -1,10 +1,18 @@
+import 'package:employee_book/Data/local/DB/app_db.dart';
 import 'package:employee_book/injection_container.dart';
 import 'package:employee_book/route/route_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   init();
-  runApp(const MyApp());
+  runApp(
+    Provider(
+      create: (context) => AppDb(),
+      child: const MyApp(),
+      dispose: (context, AppDb db) => db.close(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
