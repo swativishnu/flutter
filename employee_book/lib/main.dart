@@ -4,8 +4,10 @@ import 'package:employee_book/route/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'injection_container.dart';
+
 void main() {
-  // init();
+  init();
   runApp(
     MultiProvider(
 //      create: (context) => AppDb(),

@@ -1,37 +1,31 @@
-import 'package:employee_book/notifier/employee_change_notifier.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get_it_mixin/get_it_mixin.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-class EmployeeNotifierFututreScreen extends StatefulWidget {
-  const EmployeeNotifierFututreScreen({Key? key}) : super(key: key);
+import '../notifier/employee_change_notifier.dart';
 
-  @override
-  State<EmployeeNotifierFututreScreen> createState() =>
-      _EmployeeNotifierFututreScreenState();
-}
+class EmployeeNotifierFututreScreen extends StatelessWidget with GetItMixin {
+  EmployeeNotifierFututreScreen({
+    Key? key,
+  }) : super(key: key);
 
-class _EmployeeNotifierFututreScreenState
-    extends State<EmployeeNotifierFututreScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  //late final itemCount= employees.length;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('BuildContext');
-    final employees =
-        context.watch<EmployeeChangeNotifier>().employeeListFuture;
+    late final employees = get<EmployeeChangeNotifier>().employeeListFuture;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Employee Future'),
         centerTitle: true,
       ),
-      body: ListView.builder(
+      body: // FutureBuilder<List<employees>>(
+          ListView.builder(
         itemCount: employees.length,
         itemBuilder: (context, index) {
           final employee = employees[index];
+
           return GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/edit_employee',

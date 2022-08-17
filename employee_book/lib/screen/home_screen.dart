@@ -2,7 +2,7 @@ import 'package:employee_book/screen/employee_future_Notifier.dart';
 import 'package:employee_book/screen/employee_stream_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../Data/local/DB/app_db.dart';
+import '../injection_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,20 +13,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
-  late AppDb _db;
-  final pages = const [
-    EmployeeNotifierFututreScreen(),
+  final pages = [
+    sl<EmployeeNotifierFututreScreen>(),
     EmployeeStreamScreen(),
   ];
   @override
   void initState() {
-    _db = AppDb();
     super.initState();
   }
 
   @override
   void dispose() {
-    _db.close();
     super.dispose();
   }
 
