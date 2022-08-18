@@ -3,13 +3,16 @@ import 'package:flutter/foundation.dart';
 
 class EmployeeChangeNotifier extends ChangeNotifier {
   AppDb? _appDb;
+  late final AppDb db = AppDb();
+
   void initAppDb(AppDb db) {
     _appDb = db;
   }
 
-  List<EmployeeData> _employeeListFuture = [];
+  late ValueListenable<List<EmployeeData>> _employeeListFuture;
   late List<EmployeeData> _employeeListStream = [];
-  List<EmployeeData> get employeeListFuture => _employeeListFuture;
+  ValueListenable<List<EmployeeData>> get employeeListFuture =>
+      _employeeListFuture;
   List<EmployeeData> get employeeListStream => _employeeListStream;
   EmployeeData? _employeeData;
   EmployeeData? get employeeData => _employeeData;
@@ -22,11 +25,16 @@ class EmployeeChangeNotifier extends ChangeNotifier {
   bool _isDeleted = false;
   bool get isDeleted => _isDeleted;
 
-  void getEmployeeFuture() {
+  List<EmployeeData> getEmployeeFuture() {
+    initAppDb(db);
     _appDb?.getEmployees().then((value) {
       _employeeListFuture = value;
       notifyListeners();
+
+      return _employeeListFuture;
+      // ignore: invalid_return_type_for_catch_error
     }).catchError((error, stackTrace) => {});
+    return _employeeListFuture;
   }
 
   void getEmployeeStream() {

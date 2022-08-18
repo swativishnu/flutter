@@ -7,6 +7,7 @@ import 'notifier/employee_change_notifier.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  
   sl.registerFactory(() => AppDb());
   sl.registerLazySingleton<EmployeeChangeNotifier>(
       () => EmployeeChangeNotifier());
